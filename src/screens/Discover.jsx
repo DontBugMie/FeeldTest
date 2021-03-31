@@ -89,14 +89,14 @@ function Discover({
           </View>
         }}
         />
-        {/* <View style={styles.pagination}>
-          {photosArr.map((_,index.length)=>{
+        <View style={styles.pagination}>
+          {photosArr.map((_,index)=>{
             return <View
               key={index.length}
               style={[styles.dot]}
             />
           })}
-        </View>*/} 
+        </View>
       </View>
 
 
@@ -204,20 +204,20 @@ const styles = StyleSheet.create({
     width: PROFILE_PIC_WIDTH,
     resizeMode:'cover'
   },
-  // pagination:{
-  //   position:'absolute',
-  //   top: PROFILE_PIC_HEIGHT / 2,
-  //   right:30,
-  //   zIndex:400,
-  // },
-  // dot:{
-  //   position:'absolute',
-  //   width: DOT_SIZE,
-  //   height: DOT_SIZE,
-  //   borderRadius: DOT_SIZE,
-  //   backgroundColor: 'white',
-  //   zIndex:400,
-  // }
+  pagination:{
+    position:'absolute',
+    top: PROFILE_PIC_HEIGHT / 2,
+    right:30,
+    zIndex:400,
+  },
+  dot:{
+    position:'absolute',
+    width: DOT_SIZE,
+    height: DOT_SIZE,
+    borderRadius: DOT_SIZE,
+    backgroundColor: 'white',
+    zIndex:400,
+  }
 });
 
 export default connector(Discover);
