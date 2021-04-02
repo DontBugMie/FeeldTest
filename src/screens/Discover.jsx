@@ -1,4 +1,3 @@
-// import BottomSheet, { BottomSheetScrollView } from 'react-native-bottomsheet';
 import React, { useEffect } from 'react';
 import {
   StyleSheet,
@@ -10,7 +9,10 @@ import {
   Pressable,
   Dimensions,
   Animated,
+  ScrollView
 } from 'react-native';
+
+
 import { NavigationParams } from 'react-navigation';
 import { connect, ConnectedProps } from 'react-redux';
 
@@ -20,6 +22,10 @@ import { Routes } from '../navigation/routes';
 import { Profile } from '../interface/types';
 import { ImageStore } from 'react-native';
 
+import LikeRatingBtn from '../components/buttons/likeRatingBtn';
+import DislikeRatingBtn from '../components/buttons/dislikeRatingBtn';
+
+import Color from '../components/colors/colors';
 
 const mapStateToProps = (state: RootState) => ({
   fetchingProfiles: state.discover.fetchingProfiles,
@@ -40,12 +46,12 @@ type Props = PropsFromRedux & {
 
 const { width, height } = Dimensions.get('screen');
 
-const PROFILE_PIC_HEIGHT = height * .75;
+const PROFILE_PIC_HEIGHT = height * .56;
 const PROFILE_PIC_WIDTH = width;
 
 const DOT_SIZE = 12;
 const DOT_SPACING = 12;
-
+const DOT_INDICATOR_SIZE = DOT_SIZE + DOT_SPACING;
 
 
 function Discover({
@@ -65,12 +71,12 @@ function Discover({
 
 
 
-  const Item = ({ title, photosArr, age, type, gender, sexuality, about, desires, interests, onPress }: { title: string; photosArr: object; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any }) => (
+  const Item = ({ title, photosArr, partnersTitle, noPartnerPhotoReplacement, age, type, gender, sexuality, about, desires, interests, onPress, associated }: { title: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any ; associated: () => any }) => (
 
 
 
-    <Pressable style={styles.item} onPress={onPress}>
-      <View>
+    // <Pressable style={styles.item} onPress={onPress}>
+      <View style={[styles.pageBackground,{flex:1}]}>
         <Animated.FlatList
         horizontal={false}
         data={photosArr}
@@ -90,40 +96,54 @@ function Discover({
         }}
         />
         <View style={styles.pagination}>
-          {photosArr.map((_,index)=>{
+          {photosArr.forEach(element => {
+           let numOfDots = element;
             return <View
-              key={index.length}
+              key={numOfDots}
               style={[styles.dot]}
             />
           })}
+          <Animated.View
+            style={[styles.dotIndicator, {
+              transform:[{
+                translateY: Animated.divide(scrollY, PROFILE_PIC_HEIGHT).interpolate({
+                  inputRange: [0,1],
+                  outputRange:[0, DOT_INDICATOR_SIZE]
+                })
+              }]
+            }]}
+            />
         </View>
+        <View style={styles.buttonsContainer}>
+          <DislikeRatingBtn/>
+          <Pressable style={styles.partnersProfileBtn} onPress={associated}>
+            <Text style={styles.partnersTitle}>{partnersTitle}</Text>
+            <Image style={styles.noPartnerPhotoReplacement} source={{uri: noPartnerPhotoReplacement}}/>
+          </Pressable>
+          <LikeRatingBtn/>
+        </View>
+
+
+      <Pressable style={styles.profileDescriptionContainer}>
+        <ScrollView 
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}>
+          <Text  style={styles.profileDescriptionText}>{age} {gender} {type}</Text>
+          <Text style={styles.profileDescriptionText}>{sexuality}</Text>
+          <Text style={styles.profileDescriptionText}></Text>
+          <Text style={styles.profileDescriptionText}>{about}</Text>
+          <Text style={styles.profileDescriptionText}></Text>
+          <Text style={styles.profileDescriptionText}>Desires:</Text>
+          <Text style={styles.profileDescriptionText}>{desires}</Text>
+          <Text style={styles.profileDescriptionText}></Text>
+          <Text style={styles.profileDescriptionText}>Interests:</Text>
+          <Text style={styles.profileDescriptionText}>{interests}</Text> 
+        </ScrollView>
+      </Pressable>
       </View>
+  
 
-
-
-      {/* <BottomSheet
-        initialSnapIndex={0}
-        snapPoints={[height - PROFILE_PIC_HEIGHT, height]}
-      >
-        <BottomSheetScrollView>
-            <Text style={styles.text}>{age} {gender} {type}</Text>
-            <Text style={styles.text}>{sexuality}</Text>
-            <Text style={styles.text}></Text>
-            <Text style={styles.text}>{about}</Text>
-            <Text style={styles.text}></Text>
-            <Text style={styles.text}>Desires:</Text>
-            <Text style={styles.text}>{desires}</Text>
-            <Text style={styles.text}></Text>
-            <Text style={styles.text}>Interests:</Text>
-            <Text style={styles.text}>{interests}</Text> 
-        </BottomSheetScrollView>
-      </BottomSheet> */}
-
-
-
-
-      <Text style={styles.title}>{title}</Text>
-    </Pressable>
+     
   );
 
   const renderItem = ({ item }: { item: Profile }) => (
@@ -132,6 +152,16 @@ function Discover({
         item.associated
           ? `${item.info.name} & ${item.associated?.name}`
           : item.info.name
+      }
+      partnersTitle={
+        item.associated
+          ? `${item.associated?.name}`
+          : ""
+      }
+      noPartnerPhotoReplacement={
+        item.associated
+          ? `https://dontbugmie.github.io/fldImges/feeldLogo.png`
+          : `https://dontbugmie.github.io/fldImges/feeldLogo.png`
       }
       photosArr={
         item.photos.length === 0 ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/FEELD_LOGO_-_Official.jpg/1920px-FEELD_LOGO_-_Official.jpg' : item.photos
@@ -160,14 +190,14 @@ function Discover({
       interests={
         item.info.interests
       }
-      // onPress={() =>
-      //   item.associated
-      //     ? navigation.navigate('Root', {
-      //         screen: Routes.PartnerProfile,
-      //         params: { profile: item.associated },
-      //       })
-      //     : null
-      // }
+      associated={() =>
+        item.associated
+          ? navigation.navigate('Root', {
+              screen: Routes.PartnerProfile,
+              params: { profile: item.associated },
+            })
+          : null
+      }
     />
   );
 
@@ -187,6 +217,9 @@ function Discover({
 }
 
 const styles = StyleSheet.create({
+  pageBackground:{
+    backgroundColor:'pink'
+  },
   container: {
     flex: 1,
   },
@@ -194,11 +227,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    // padding: 2,
-    marginHorizontal: 0,
-  },
+  // item: {
+  //   backgroundColor: 'blue',
+  //   // padding: 2,
+  //   width:'100%',
+  //   height:'50%',
+  //   marginHorizontal: 0,
+  // },
   profilePic:{
     height: PROFILE_PIC_HEIGHT,
     width: PROFILE_PIC_WIDTH,
@@ -217,7 +252,84 @@ const styles = StyleSheet.create({
     borderRadius: DOT_SIZE,
     backgroundColor: 'white',
     zIndex:400,
+  },
+  dotIndicator:{
+    width: DOT_INDICATOR_SIZE,
+    height: DOT_INDICATOR_SIZE,
+    borderRadius: DOT_INDICATOR_SIZE,
+    borderWidth:1,
+    borderColor:'white',
+    position:'absolute',
+    top: -DOT_SIZE / 2,
+    left: -DOT_SIZE / 2,
+  },
+  buttonsContainer:{
+    flexDirection:'row',
+    alignSelf:'center',
+    // justifyContent:'space-evenly',
+    // flex:3,
+    zIndex:2,
+    position:'absolute',
+    top:height * .42,
+  },
+  partnersProfileBtn:{
+    borderWidth: 2,
+    // position:'absolute',
+    // left: Dimensions.get('window').width*0.12,
+    // marginHorizontal:30,
+    borderColor:Color.darkOrange,
+    backgroundColor: Color.main,
+    shadowColor: Color.darkest,
+    top:-30,
+    // top:Dimensions.get('window').height * 0.5,
+    shadowOpacity: 0.5,
+    borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height)/2,
+    width: Dimensions.get('window').width * 0.3,
+    height: Dimensions.get('window').width *0.3,
+    justifyContent: 'center',
+    textAlign:'center',
+    alignSelf:'center',
+    zIndex:2,
+  },
+  partnersTitle:{
+    fontSize:30,
+    position:'absolute',
+    left:'20%',
+    backgroundColor:'transparent',
+    zIndex:2,
+  },
+  noPartnerPhotoReplacement:{
+    zIndex:1,
+    padding:40,
+    opacity:0.5,
+  },
+  profileDescriptionContainer:{
+    width: PROFILE_PIC_WIDTH,
+    maxWidth:PROFILE_PIC_WIDTH,
+    height:height * .40,
+    bottom:0,
+    position:'absolute',
+    borderTopLeftRadius: 100,
+    borderTopRightRadius: 100,
+    backgroundColor:Color.white,
+    padding:30,
+    borderTopWidth:50,  
+    borderWidth:4,  
+    borderColor: Color.main,
+    fontSize:Dimensions.get('window').width*0.5,
+    shadowColor: Color.darkGrey,
+    shadowOpacity: 0.8,
+  },
+  profileDescriptionText:{
+    marginLeft:15,
+    fontSize:16
   }
+  
 });
 
 export default connector(Discover);
+
+
+
+      // <Text style={styles.title}>{title}</Text>
+    // </Pressable>
