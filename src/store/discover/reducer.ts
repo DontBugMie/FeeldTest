@@ -1,4 +1,5 @@
 import { DiscoverAction, DiscoverState, DiscoverActionTypes } from './types';
+import { Rating } from '../../interface/types';
 
 const initialState: DiscoverState = {
   fetchingProfiles: false,
@@ -17,9 +18,18 @@ const discover = (state = initialState, action: DiscoverAction) => {
       };
     case DiscoverActionTypes.FETCH_PROFILES_FAILURE:
       return { ...state, fetchingProfiles: false };
+
+      case DiscoverActionTypes.RATE_PROFILE:
+        let newRatings = state.ratings;
+        newRatings.push({like: action.like, id: action.id});
+
+        let newProfiles = state.profiles.filter ( profile => profile.id !== action.id )
+        return { ...state, ratings: newRatings, profiles: newProfiles}
     default:
       return state;
   }
+
+
 };
 
 export default discover;

@@ -1,9 +1,10 @@
-import { Profile } from '../../interface/types';
+import { Profile, Rating } from '../../interface/types';
 
 export enum DiscoverActionTypes {
   FETCH_PROFILES_REQUEST = 'FETCH_PROFILES_REQUEST',
   FETCH_PROFILES_SUCCESS = 'FETCH_PROFILES_SUCCESS',
   FETCH_PROFILES_FAILURE = 'FETCH_PROFILES_FAILURE',
+  RATE_PROFILE = 'RATE_PROFILE',
 }
 
 interface FetchProfilesRequestAction {
@@ -20,12 +21,22 @@ interface FetchProfilesFailureAction {
   error: Error;
 }
 
+interface RateProfileAction {
+  type: typeof DiscoverActionTypes.RATE_PROFILE;
+  like: boolean;
+  id: string; 
+}
+
 export type DiscoverAction =
   | FetchProfilesRequestAction
   | FetchProfilesSuccessAction
-  | FetchProfilesFailureAction;
+  | FetchProfilesFailureAction
+  | RateProfileAction;
+  
+
 
 export interface DiscoverState {
   fetchingProfiles: boolean;
   profiles: Profile[];
+  ratings: Rating[];
 }

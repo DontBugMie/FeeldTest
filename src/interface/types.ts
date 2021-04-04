@@ -26,3 +26,8 @@ export interface Profile {
   associated?: AssociatedProfile;
   photos: Photo[];
 }
+
+export interface Rating {
+  id: string;
+  like: boolean;
+}

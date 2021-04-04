@@ -26,6 +26,8 @@ const configureStore = () => {
   // will be cleared each time the app loads.
   // persistor.purge();
 
+  
+
   return {
     store,
     persistor,
