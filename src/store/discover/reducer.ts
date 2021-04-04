@@ -19,12 +19,16 @@ const discover = (state = initialState, action: DiscoverAction) => {
     case DiscoverActionTypes.FETCH_PROFILES_FAILURE:
       return { ...state, fetchingProfiles: false };
 
-      case DiscoverActionTypes.RATE_PROFILE:
-        let newRatings = state.ratings;
-        newRatings.push({like: action.like, id: action.id});
+    case DiscoverActionTypes.RATE_PROFILE:
+      if (state.visibleProfile === "") return state;
+      let newRatings = state.ratings;
+      newRatings.push({like: action.like, id: state.visibleProfile});
 
-        let newProfiles = state.profiles.filter ( profile => profile.id !== action.id )
-        return { ...state, ratings: newRatings, profiles: newProfiles}
+      let newProfiles = state.profiles.filter ( profile => profile.id !== state.visibleProfile )
+      return { ...state, ratings: newRatings, profiles: newProfiles };
+
+    case DiscoverActionTypes.PROFILE_CHANGED:
+      return { ...state, visibleProfile: action.id };
     default:
       return state;
   }

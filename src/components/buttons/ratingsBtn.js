@@ -9,6 +9,7 @@ import {
 import Color from '../colors/colors';
 import { AntDesign } from '@expo/vector-icons'; 
 
+
 const ratingsBtn = props => {
   return (
       <TouchableHighlight

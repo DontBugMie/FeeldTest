@@ -17,7 +17,9 @@ import { NavigationParams } from 'react-navigation';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../store/types';
-import { discoverFetchProfiles } from '../store/discover/actions';
+import { discoverFetchProfiles, profileChange } from '../store/discover/actions';
+
+
 import { Routes } from '../navigation/routes';
 import { Profile } from '../interface/types';
 import { ImageStore } from 'react-native';
@@ -26,6 +28,7 @@ import LikeRatingBtn from '../components/buttons/likeRatingBtn';
 import DislikeRatingBtn from '../components/buttons/dislikeRatingBtn';
 
 import Color from '../components/colors/colors';
+
 
 const mapStateToProps = (state: RootState) => ({
   fetchingProfiles: state.discover.fetchingProfiles,
@@ -70,12 +73,7 @@ function Discover({
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
   
-
-
-
   const Item = ({ title, photosArr, partnersTitle, noPartnerPhotoReplacement, profilePhotoCount, age, type, gender, sexuality, about, desires, interests, onPress, associated }: { title: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; profilePhotoCount: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any ; associated: () => any }) => (
-
-
 
     // <Pressable style={styles.item} onPress={onPress}>
       <View style={[styles.pageBackground,{flex:1}]}>
@@ -213,6 +211,8 @@ function Discover({
   );
 
   return fetchingProfiles ? (
+
+
     <ActivityIndicator />
   ) : (
     <FlatList
@@ -223,6 +223,14 @@ function Discover({
       data={profiles}
       renderItem={renderItem}
       keyExtractor={profile => profile.id}
+      onViewableItemsChanged= {(viewableItems, changed)=>{
+        if( viewableItems.viewableItems.length !== 1 ) {
+          profileChange("");
+        } else {
+          profileChange(viewableItems.viewableItems[0].id);
+        }
+       // console.log(viewableItems.viewableItems.length);
+      }}
     />
   );
 }

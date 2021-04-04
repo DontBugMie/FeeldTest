@@ -6,8 +6,13 @@ export const discoverFetchProfiles = (): DiscoverAction => ({
   type: DiscoverActionTypes.FETCH_PROFILES_REQUEST,
 });
 
-export const discoverRate = (id: string, like: boolean): DiscoverAction => ({
+export const discoverRate = (like: boolean): DiscoverAction => ({
   type: DiscoverActionTypes.RATE_PROFILE,
-  id: id,
   like: like,
 });
+
+export const profileChange = (id: string): DiscoverAction => ({
+  type: DiscoverActionTypes.PROFILE_CHANGED,
+  id: id,
+});
+

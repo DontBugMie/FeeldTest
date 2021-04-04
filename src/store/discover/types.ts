@@ -5,6 +5,7 @@ export enum DiscoverActionTypes {
   FETCH_PROFILES_SUCCESS = 'FETCH_PROFILES_SUCCESS',
   FETCH_PROFILES_FAILURE = 'FETCH_PROFILES_FAILURE',
   RATE_PROFILE = 'RATE_PROFILE',
+  PROFILE_CHANGED = 'PROFILE_CHANGED',
 }
 
 interface FetchProfilesRequestAction {
@@ -24,19 +25,23 @@ interface FetchProfilesFailureAction {
 interface RateProfileAction {
   type: typeof DiscoverActionTypes.RATE_PROFILE;
   like: boolean;
-  id: string; 
+}
+
+interface ProfileChangedAction {
+  type: typeof DiscoverActionTypes.PROFILE_CHANGED;
+  id: string;
 }
 
 export type DiscoverAction =
   | FetchProfilesRequestAction
   | FetchProfilesSuccessAction
   | FetchProfilesFailureAction
-  | RateProfileAction;
+  | RateProfileAction
+  | ProfileChangedAction;
   
-
-
 export interface DiscoverState {
   fetchingProfiles: boolean;
   profiles: Profile[];
   ratings: Rating[];
+  visibleProfile: string; 
 }
