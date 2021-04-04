@@ -5,9 +5,9 @@ import discoverRate from '../../store/discover/actions';
 
 const LikeRatingBtn = props => {
   
-  function likeRatingBtnFunc(id){
-    alert('you have just hit the like button');
-    discoverRate(id);
+  function likeRatingBtnFunc(){
+    // alert('you have just hit the like button');
+    discoverRate(true);
   };
 
   return (

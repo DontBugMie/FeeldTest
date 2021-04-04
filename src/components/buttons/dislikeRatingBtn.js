@@ -1,11 +1,14 @@
 import React from 'react';
 import RatingBtn from './ratingsBtn';
 import Color from '../colors/colors';
+import discoverRate from '../../store/discover/actions';
+
 
 const DislikeRatingBtn = props => {
   
   function dislikeRatingBtnFunc(){
-    alert('you have just hit the dislike button');
+    // alert('you have just hit the dislike button');
+    discoverRate(false);
   };
   
   return (
