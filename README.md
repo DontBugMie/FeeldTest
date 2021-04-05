@@ -20,9 +20,11 @@ I wouldve also like to have implemented an orange colour scheme for all common i
 
 Overall:
 
-On reflection, I would have split the profile into many other components then passed the components to the main screen.
-I would also have liked to do the options screen but ran out of time. 
-Overall, I really enjoyed the task!
+On reflection, I would have split the profile into many other components then passed the components to the main screen (All of it is on the Discover page as it wasn't working properly when I had it split into seperate components - this was the momement I decided to start again).
+I would also have liked to do the options screen but ran out of time.
+
+
+Overall, I really enjoyed the task! And like the buttons I have used. 
 
 
 
