@@ -1,4 +1,98 @@
-# Junior Frontend Engineer Challenge
+# Junior Frontend Engineer Challenge - Maya Wright 
+
+What a fantastic test! 
+I had so much fun doing this project. I had many highs and a few lows that had me stuck. 
+
+Firstly, I decided to keep the ability to swipe pass a profile and rate it later. My choice in keeping this feature is that I have read a few articles on Feeld and the feature has been listed many times as a loved distinction to other dating apps. 
+I kept the colour scheme Feeld friendly to keep in line with branding. 
+
+Ive implemented the tasks so that all profiles are unique and will not be shown to the user more than once. 
+
+For partner profiles I have used the middle button which shows the Feeld app logo. Ideally, I wanted to use the profile picture for the associated profile. 
+
+
+Improvements: 
+
+In order to improve, I would have implemented an orange layer with a light orange heart to the photos when the like button is pressed and make the photo turn black and white when the dislike button is pressed. 
+
+I wouldve also like to have implemented an orange colour scheme for all common interests and desires that the users have in common with the person using the app. (Hello Cupid also used to have a quiz which would give its users a percentage to show how well the users match. This could also be a good feature to implement). 
+
+
+Overall:
+
+On reflection, I would have split the profile into many other components then passed the components to the main screen.
+I would also have liked to do the options screen but ran out of time. 
+Overall, I really enjoyed the task!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Hi! Welcome to Feeld.
 

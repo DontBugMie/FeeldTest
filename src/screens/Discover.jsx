@@ -14,7 +14,7 @@ import {
 import { NavigationParams } from 'react-navigation';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../store/types';
-import { discoverFetchProfiles, profileChange, discoverRate } from '../store/discover/actions';
+import { discoverFetchProfiles, discoverRate } from '../store/discover/actions';
 import { Routes } from '../navigation/routes';
 import { Profile } from '../interface/types';
 import LikeRatingBtn from '../components/buttons/likeRatingBtn';
@@ -25,26 +25,20 @@ const mapStateToProps = (state: RootState) => ({
   fetchingProfiles: state.discover.fetchingProfiles,
   profiles: state.discover.profiles,
 });
-
 const mapDispatchToProps = {
   fetchProfiles: discoverFetchProfiles,
   discoverRate: discoverRate
 };
-
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
+const { width, height } = Dimensions.get('screen');
+const PROFILE_PIC_HEIGHT = height*.86;
+const PROFILE_PIC_WIDTH = width;
 type PropsFromRedux = ConnectedProps<typeof connector>;
-
 type Props = PropsFromRedux & {
   navigation: NavigationParams;
 };
 
-const { width, height } = Dimensions.get('screen');
-const PROFILE_PIC_HEIGHT = height*.86;
-const PROFILE_PIC_WIDTH = width;
-const DOT_SIZE = 12;
-const DOT_SPACING = 12;
-const DOT_INDICATOR_SIZE = DOT_SIZE + DOT_SPACING;
+
 
 function Discover({
   navigation,
@@ -61,7 +55,7 @@ function Discover({
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
-  const Item = ({ id, title, photosArr, partnersTitle, noPartnerPhotoReplacement, profilePhotoCount, age, type, gender, sexuality, about, desires, interests, onPress, associated }: { id: string; title: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; profilePhotoCount: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any ; associated: () => any }) => (
+  const Item = ({ id, photosArr, partnersTitle, noPartnerPhotoReplacement, age, type, gender, sexuality, about, desires, interests, associated }: { id: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; associated: () => any }) => (
       <View style={[styles.pageBackground,{flex:1}]}>
         <Animated.FlatList
         horizontal={false}
@@ -82,26 +76,7 @@ function Discover({
           </View>
         }}
         />
-        <View style={styles.pagination}>
-          {/* //function for creating number of dots */}
-          {photosArr.forEach(element => {
-           let numOfDots = element;
-            return <View
-              key={numOfDots}
-              style={[styles.dot]}
-            />
-          })}
-          <Animated.View
-            style={[styles.dotIndicator, {
-              transform:[{
-                translateY: Animated.divide(scrollY, height).interpolate({
-                  inputRange: [0,4],
-                  outputRange:[0, DOT_INDICATOR_SIZE]
-                })
-              }]
-            }]}
-            />
-        </View>
+
         <View style={styles.buttonsContainer}>
           <DislikeRatingBtn profileId={id} discoverRate={discoverRate} />
           <Pressable onPress={associated}>
@@ -223,37 +198,15 @@ const styles = StyleSheet.create({
     resizeMode:'cover',
     borderColor:Color.main,
     borderWidth: 2,
-  },
-  pagination:{
-    // position:'absolute',
-    // top: PROFILE_PIC_HEIGHT / 2,
-    // right:30,
-    // zIndex:400,
-  },
-  dot:{
-    // position:'absolute',
-    // width: DOT_SIZE,
-    // height: DOT_SIZE,
-    // borderRadius: DOT_SIZE,
-    // backgroundColor: 'white',
-    // zIndex:400,
-  },
-  dotIndicator:{
-    // width: DOT_INDICATOR_SIZE,
-    // height: DOT_INDICATOR_SIZE,
-    // borderRadius: DOT_INDICATOR_SIZE,
-    // borderWidth:1,
-    // borderColor:'white',
-    // position:'absolute',
-    // top: -DOT_SIZE / 2,
-    // left: -DOT_SIZE / 2,
+    shadowColor: Color.darkGrey,
+    shadowOpacity: 0.8,
   },
   buttonsContainer:{
     flexDirection:'row',
     alignSelf:'center',
     zIndex:2,
     position:'absolute',
-    top:height * .42,
+    top:height * .35,
   },
   partnersProfileBtn:{
     borderWidth: 2,
@@ -303,7 +256,6 @@ const styles = StyleSheet.create({
     marginLeft:15,
     fontSize:16
   }
-  
 });
 
 export default connector(Discover);
