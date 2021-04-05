@@ -68,15 +68,17 @@ function Discover({
   useEffect(() => {
     if (profiles.length < 1) {
       fetchProfiles();
+      
     }
   }, []);
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
   
-  const Item = ({ title, photosArr, partnersTitle, noPartnerPhotoReplacement, profilePhotoCount, age, type, gender, sexuality, about, desires, interests, onPress, associated }: { title: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; profilePhotoCount: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any ; associated: () => any }) => (
-
+  const Item = ({ id, title, photosArr, partnersTitle, noPartnerPhotoReplacement, profilePhotoCount, age, type, gender, sexuality, about, desires, interests, onPress, associated }: { id: string; title: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; profilePhotoCount: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any ; associated: () => any }) => (
+  
     // <Pressable style={styles.item} onPress={onPress}>
       <View style={[styles.pageBackground,{flex:1}]}>
+        
         <Animated.FlatList
         horizontal={false}
         data={photosArr}
@@ -89,7 +91,7 @@ function Discover({
         ],
         { useNativeDriver:true }
         )}
-        keyExtractor={(_,index)=> index.toString()}
+        keyExtractor={(item, index)=> [id, index]}
         renderItem={({item})=>{
           return <View>
             <Image source={{uri: item.url}} style={styles.profilePic}/>
@@ -152,6 +154,7 @@ function Discover({
   );
 
   const renderItem = ({ item }: { item: Profile }) => (
+   
     <Item
       // title={
       //   item.associated
@@ -163,6 +166,7 @@ function Discover({
       //   item.info.name.length + item.associated.name.length + 3
       //   : item.info.name.length
       // }
+      id={item.id}
       partnersTitle={
         item.associated
           ? `${item.info.name[0].toUpperCase()}${item.info.name.slice(1)} & ${item.associated.name[0].toUpperCase()}${item.associated.name.slice(1)}`
@@ -229,6 +233,7 @@ function Discover({
         } else {
           profileChange(viewableItems.viewableItems[0].id);
         }
+       
        // console.log(viewableItems.viewableItems.length);
       }}
     />
