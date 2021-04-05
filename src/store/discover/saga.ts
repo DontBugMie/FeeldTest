@@ -10,18 +10,25 @@ function* fetchProfiles(action: DiscoverAction) {
 
   try {
     const { sessionToken } = yield select(state => state.auth);
+   
     const response = yield call(callApi, {
       endpoint: 'users',
       method: 'GET',
       sessionToken: sessionToken,
     });
 
-    yield put({ type: DiscoverActionTypes.FETCH_PROFILES_SUCCESS, response });
+    yield put({ 
+      type: DiscoverActionTypes.FETCH_PROFILES_SUCCESS, 
+      response: response 
+    });
+
   } catch (error) {
+
     yield put({
       type: DiscoverActionTypes.FETCH_PROFILES_FAILURE,
       error: error,
     });
+    
   }
 }
 

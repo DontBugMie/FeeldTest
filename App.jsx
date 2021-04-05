@@ -14,8 +14,7 @@ enableScreens();
 function App() {
   const { store, persistor } = configureStore();
 
-   function storeContainer(children: ReactNode | ReactNode[]) {
-    
+  function storeContainer(children: ReactNode | ReactNode[]) {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

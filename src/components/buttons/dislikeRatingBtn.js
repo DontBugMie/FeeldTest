@@ -7,8 +7,7 @@ import discoverRate from '../../store/discover/actions';
 const DislikeRatingBtn = props => {
   
   function dislikeRatingBtnFunc(){
-    // alert('you have just hit the dislike button');
-    discoverRate(false);
+    props.discoverRate(false, props.profileId);
   };
   
   return (

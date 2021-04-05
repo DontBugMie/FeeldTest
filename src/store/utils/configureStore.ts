@@ -24,7 +24,7 @@ const configureStore = () => {
   // Uncomment this line and reload the app to clear the local state.
   // Remember to comment out this line afterwards, otherwise the state
   // will be cleared each time the app loads.
-  // persistor.purge();
+  persistor.purge();
 
   
 

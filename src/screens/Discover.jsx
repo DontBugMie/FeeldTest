@@ -17,7 +17,7 @@ import { NavigationParams } from 'react-navigation';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../store/types';
-import { discoverFetchProfiles, profileChange } from '../store/discover/actions';
+import { discoverFetchProfiles, profileChange, discoverRate } from '../store/discover/actions';
 
 
 import { Routes } from '../navigation/routes';
@@ -37,6 +37,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = {
   fetchProfiles: discoverFetchProfiles,
+  discoverRate: discoverRate
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -63,12 +64,12 @@ function Discover({
   navigation,
   fetchingProfiles,
   fetchProfiles,
+  discoverRate,
   profiles,
 }: Props) {
   useEffect(() => {
     if (profiles.length < 1) {
       fetchProfiles();
-      
     }
   }, []);
 
@@ -120,14 +121,14 @@ function Discover({
         </View>
  
         <View style={styles.buttonsContainer}>
-          <DislikeRatingBtn/>
+          <DislikeRatingBtn profileId={id} discoverRate={discoverRate} />
           <Pressable onPress={associated}>
             <View style={styles.partnersProfileBtn}>
             <Text style={[styles.title]}>{partnersTitle}</Text>
             <Image style={styles.noPartnerPhotoReplacement} source={{uri: noPartnerPhotoReplacement}}/>
             </View>
           </Pressable>
-          <LikeRatingBtn/>
+          <LikeRatingBtn profileId={id}  discoverRate={discoverRate}/>
         </View>
 
 
@@ -152,6 +153,9 @@ function Discover({
 
      
   );
+
+  
+
 
   const renderItem = ({ item }: { item: Profile }) => (
    
@@ -227,15 +231,6 @@ function Discover({
       data={profiles}
       renderItem={renderItem}
       keyExtractor={profile => profile.id}
-      onViewableItemsChanged= {(viewableItems, changed)=>{
-        if( viewableItems.viewableItems.length !== 1 ) {
-          profileChange("");
-        } else {
-          profileChange(viewableItems.viewableItems[0].id);
-        }
-       
-       // console.log(viewableItems.viewableItems.length);
-      }}
     />
   );
 }

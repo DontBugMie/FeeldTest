@@ -25,10 +25,6 @@ interface FetchProfilesFailureAction {
 interface RateProfileAction {
   type: typeof DiscoverActionTypes.RATE_PROFILE;
   like: boolean;
-}
-
-interface ProfileChangedAction {
-  type: typeof DiscoverActionTypes.PROFILE_CHANGED;
   id: string;
 }
 
@@ -36,12 +32,10 @@ export type DiscoverAction =
   | FetchProfilesRequestAction
   | FetchProfilesSuccessAction
   | FetchProfilesFailureAction
-  | RateProfileAction
-  | ProfileChangedAction;
-  
+  | RateProfileAction;
+    
 export interface DiscoverState {
   fetchingProfiles: boolean;
   profiles: Profile[];
   ratings: Rating[];
-  visibleProfile: string; 
 }
