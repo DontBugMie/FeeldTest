@@ -167,10 +167,10 @@ function Discover({
         item.info.about
       }
       desires={
-        item.info.desires
+        item.info.desires.join(' | ')
       }
       interests={
-        item.info.interests
+        item.info.interests.join(' | ')
       }
       associated={() =>
         item.associated
