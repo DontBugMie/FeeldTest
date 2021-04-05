@@ -13,6 +13,7 @@ const discover = (state = initialState, action: DiscoverAction) => {
  // console.log("==========================");
   switch (action.type) {
     case DiscoverActionTypes.FETCH_PROFILES_REQUEST:
+      console.log('reducer - fetch profiles request')
       return { ...state, fetchingProfiles: true };
     case DiscoverActionTypes.FETCH_PROFILES_SUCCESS:
 
