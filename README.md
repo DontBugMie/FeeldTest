@@ -11,14 +11,14 @@ Ive implemented the tasks so that all profiles are unique and will not be shown 
 For partner profiles I have used the middle button which shows the Feeld app logo. Ideally, I wanted to use the profile picture for the associated profile that way there would be a clear distinction between profiles that are looking alone and those that are looking with a partner. 
 
 
-Improvements: 
+**Improvements: **
 
 In order to improve, I would have implemented an orange layer with a light orange heart to the photos when the like button is pressed and make the photo turn black and white when the dislike button is pressed. 
 
 I wouldve also like to have implemented an orange colour scheme for all common interests and desires that the users have in common with the person using the app. (Hello Cupid also used to have a quiz which would give its users a percentage to show how well the users match. This could also be a good feature to implement). 
 
 
-Overall:
+**Overall:**
 
 On reflection, I would have split the profile into many other components then passed the components to the main screen (All of it is on the Discover page as it wasn't working properly when I had it split into seperate components - this was the momement I decided to start again).
 I would also have liked to do the options screen but ran out of time.
@@ -30,7 +30,7 @@ Overall, I really enjoyed the task! And like the buttons I have used.
 
 
 
-To Start run:
+**To Start run:**
 
 yarn install
 expo start
