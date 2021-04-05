@@ -28,7 +28,10 @@ Overall, I really enjoyed the task!
 
 
 
+To Start run:
 
+yarn install
+expo start
 
 
 
