@@ -11,24 +11,15 @@ import {
   Animated,
   ScrollView,
 } from 'react-native';
-
-
 import { NavigationParams } from 'react-navigation';
 import { connect, ConnectedProps } from 'react-redux';
-
 import { RootState } from '../store/types';
 import { discoverFetchProfiles, profileChange, discoverRate } from '../store/discover/actions';
-
-
 import { Routes } from '../navigation/routes';
 import { Profile } from '../interface/types';
-import { ImageStore } from 'react-native';
-
 import LikeRatingBtn from '../components/buttons/likeRatingBtn';
 import DislikeRatingBtn from '../components/buttons/dislikeRatingBtn';
-
 import Color from '../components/colors/colors';
-
 
 const mapStateToProps = (state: RootState) => ({
   fetchingProfiles: state.discover.fetchingProfiles,
@@ -49,16 +40,11 @@ type Props = PropsFromRedux & {
 };
 
 const { width, height } = Dimensions.get('screen');
-
 const PROFILE_PIC_HEIGHT = height*.86;
 const PROFILE_PIC_WIDTH = width;
-
-
-
 const DOT_SIZE = 12;
 const DOT_SPACING = 12;
 const DOT_INDICATOR_SIZE = DOT_SIZE + DOT_SPACING;
-
 
 function Discover({
   navigation,
@@ -74,12 +60,9 @@ function Discover({
   }, []);
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
-  
+
   const Item = ({ id, title, photosArr, partnersTitle, noPartnerPhotoReplacement, profilePhotoCount, age, type, gender, sexuality, about, desires, interests, onPress, associated }: { id: string; title: string; photosArr: object; partnersTitle: string; noPartnerPhotoReplacement: string; profilePhotoCount: string; age: string; type: string; gender: string; sexuality: string; name: string; about: string; desires: object; interests: object; onPress: () => any ; associated: () => any }) => (
-  
-    // <Pressable style={styles.item} onPress={onPress}>
       <View style={[styles.pageBackground,{flex:1}]}>
-        
         <Animated.FlatList
         horizontal={false}
         data={photosArr}
@@ -119,7 +102,6 @@ function Discover({
             }]}
             />
         </View>
- 
         <View style={styles.buttonsContainer}>
           <DislikeRatingBtn profileId={id} discoverRate={discoverRate} />
           <Pressable onPress={associated}>
@@ -130,8 +112,6 @@ function Discover({
           </Pressable>
           <LikeRatingBtn profileId={id}  discoverRate={discoverRate}/>
         </View>
-
-
       <Pressable style={styles.profileDescriptionContainer}>
         <ScrollView 
         showsVerticalScrollIndicator={false}
@@ -149,28 +129,13 @@ function Discover({
         </ScrollView>
       </Pressable>
       </View>
-  
-
-     
   );
 
-  
-
-
   const renderItem = ({ item }: { item: Profile }) => (
-   
     <Item
-      // title={
-      //   item.associated
-      //     ? `${item.info.name} & ${item.associated?.name}`
-      //     : item.info.name
-      // }
-      // titleLength={
-      //   item.associated?
-      //   item.info.name.length + item.associated.name.length + 3
-      //   : item.info.name.length
-      // }
-      id={item.id}
+      id={
+        item.id
+      }
       partnersTitle={
         item.associated
           ? `${item.info.name[0].toUpperCase()}${item.info.name.slice(1)} & ${item.associated.name[0].toUpperCase()}${item.associated.name.slice(1)}`
@@ -219,8 +184,6 @@ function Discover({
   );
 
   return fetchingProfiles ? (
-
-
     <ActivityIndicator />
   ) : (
     <FlatList
@@ -245,8 +208,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Dimensions.get('window').width/20,
     width:'100%',
-    // top:'45%',
-    // left:5,
     zIndex:70,
     position:'absolute',
     textAlign: 'center',
@@ -255,13 +216,6 @@ const styles = StyleSheet.create({
     textShadowRadius:5,
     textShadowOffset: {width: -1, height: 1},
   },
-  // item: {
-  //   backgroundColor: 'blue',
-  //   // padding: 2,
-  //   width:'100%',
-  //   height:'50%',
-  //   marginHorizontal: 0,
-  // },
   profilePic:{
     height: PROFILE_PIC_HEIGHT,
     width: PROFILE_PIC_WIDTH,
@@ -297,37 +251,26 @@ const styles = StyleSheet.create({
   buttonsContainer:{
     flexDirection:'row',
     alignSelf:'center',
-    // justifyContent:'space-evenly',
-    // flex:3,
     zIndex:2,
     position:'absolute',
     top:height * .42,
   },
   partnersProfileBtn:{
     borderWidth: 2,
-    // position:'absolute',
-    // left: Dimensions.get('window').width*0.12,
-    // marginHorizontal:30,
     borderColor:Color.darkOrange,
     backgroundColor: Color.main,
     shadowColor: Color.darkest,
     top:-30,
-    // top:Dimensions.get('window').height * 0.5,
     shadowOpacity: 0.5,
     borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height)/2,
     width: Dimensions.get('window').width * 0.3,
     height: Dimensions.get('window').width *0.3,
     justifyContent: 'center',
-    // alignContent:'center',
-    // textAlign:'center',
-    // alignSelf:'center',
-    // zIndex:2,
   },
   partnersTitle:{
     fontSize:30,
     position:'absolute',
     textAlign:'center',
-    // left:'20%',
     backgroundColor:'transparent',
     zIndex:2,
   },

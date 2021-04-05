@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-
 import discover from './discover/reducer';
 import auth from './auth/reducer';
 

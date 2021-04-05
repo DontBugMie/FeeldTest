@@ -1,7 +1,6 @@
 import React from 'react';
 import Color from '../colors/colors';
 import RatingBtn from './ratingsBtn';
-import discoverRate from '../../store/discover/actions';
 
 const LikeRatingBtn = props => {
   

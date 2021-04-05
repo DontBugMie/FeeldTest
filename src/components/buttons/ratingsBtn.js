@@ -1,14 +1,11 @@
-// Focal button for rating the profile
 import React from 'react';
 import {
   StyleSheet,
   Dimensions,
   TouchableHighlight
 } from 'react-native';
-
 import Color from '../colors/colors';
 import { AntDesign } from '@expo/vector-icons'; 
-
 
 const ratingsBtn = props => {
   return (

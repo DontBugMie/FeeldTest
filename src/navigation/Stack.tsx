@@ -3,11 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { navigationRef } from '../services/navigation';
 import { Routes } from './routes';
 import { AssociatedProfile } from '../interface/types';
-
 import Discover from '../screens/Discover';
 import PartnerProfile from '../screens/PartnerProfile';
 import Options from '../screens/Options';

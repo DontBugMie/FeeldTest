@@ -1,6 +1,5 @@
+import { useStore } from 'react-redux';
 import { DiscoverAction, DiscoverState, DiscoverActionTypes } from './types';
-import { Rating } from '../../interface/types';
-import { Alert } from 'react-native';
 
 const initialState: DiscoverState = {
   fetchingProfiles: false,
@@ -9,32 +8,35 @@ const initialState: DiscoverState = {
 };
 
 const discover = (state = initialState, action: DiscoverAction) => {
+  //console.log('state.profiles.length', state.profiles.length);
+  //state.profiles.forEach(item => {console.log(item.info.name, item.id)});
+ // console.log("==========================");
   switch (action.type) {
     case DiscoverActionTypes.FETCH_PROFILES_REQUEST:
-      //alert("foo");
       return { ...state, fetchingProfiles: true };
     case DiscoverActionTypes.FETCH_PROFILES_SUCCESS:
-      //console.log("bar");
-      console.log("total", action.response.data.length);
-      //let profilesset = new Set();
-      //profilesset.add(action.response.data);
-      // let uniqueProfiles = [];
-      // let profileMap = {};
-      // action.response.data.forEach(element => {
-      //   if ())
-      //   uniqueProfiles.add(element);
-      // });
-      // console.log("unique", uniqueProfiles.size);
+
+      let profilesMap = {};
+      let profilesArr = [];
+      action.response.data.forEach(profile => {
+        if (!profilesMap.hasOwnProperty(profile.id)) {
+          profilesMap[profile.id] = true;
+          profilesArr.push(profile);
+        //} else {
+        //  console.log('skipping', profile.info.name, profile.id);
+        }
+      });
+      console.log('before: ', action.response.data.length, ' after: ', profilesArr.length);
+
       return {
         ...state,
         fetchingProfiles: false,
-        profiles: action.response.data,
+        profiles: profilesArr,
       };
     case DiscoverActionTypes.FETCH_PROFILES_FAILURE:
       return { ...state, fetchingProfiles: false };
 
     case DiscoverActionTypes.RATE_PROFILE:
-      console.log('rate profile :)');
       let newRatings = state.ratings;
       newRatings.push({like: action.like, id: action.id });
 
@@ -44,8 +46,6 @@ const discover = (state = initialState, action: DiscoverAction) => {
     default:
       return state;
   }
-
-
 };
 
 export default discover;

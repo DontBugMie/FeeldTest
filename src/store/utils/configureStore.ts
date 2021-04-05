@@ -2,7 +2,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import reducer from '../reducer';
 import saga from '../saga';
 
@@ -25,8 +24,6 @@ const configureStore = () => {
   // Remember to comment out this line afterwards, otherwise the state
   // will be cleared each time the app loads.
   persistor.purge();
-
-  
 
   return {
     store,

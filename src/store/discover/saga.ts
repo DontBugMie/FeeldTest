@@ -1,5 +1,4 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-
 import { callApi } from '../../middleware/api';
 import { DiscoverActionTypes, DiscoverAction } from './types';
 
@@ -28,7 +27,6 @@ function* fetchProfiles(action: DiscoverAction) {
       type: DiscoverActionTypes.FETCH_PROFILES_FAILURE,
       error: error,
     });
-    
   }
 }
 
