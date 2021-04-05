@@ -8,7 +8,7 @@ I kept the colour scheme Feeld friendly to keep in line with branding.
 
 Ive implemented the tasks so that all profiles are unique and will not be shown to the user more than once. 
 
-For partner profiles I have used the middle button which shows the Feeld app logo. Ideally, I wanted to use the profile picture for the associated profile. 
+For partner profiles I have used the middle button which shows the Feeld app logo. Ideally, I wanted to use the profile picture for the associated profile that way there would be a clear distinction between profiles that are looking alone and those that are looking with a partner. 
 
 
 Improvements: 
